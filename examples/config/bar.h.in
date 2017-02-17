@@ -1,0 +1,7 @@
+#ifndef FOO
+#define FOO @foo@
+#endif
+
+#ifndef BAR
+#define BAR @bar@
+#endif
