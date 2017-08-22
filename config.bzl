@@ -40,14 +40,14 @@ def _fix_config_impl(ctx):
     script = ""
     for k, v in ctx.attr.values.items():
         if ctx.attr.cmake:
-            script += "s/\#cmakedefine[\s]+%s([\s]+\$\{%s\})?/\#define %s %s/g;" % (k, k, k, v)
-        else:
-            script += "s/\@%s\@/%s/g;" % (k, v)
+            script += r"s/\#cmakedefine\s+%s\b.*/\#define %s %s/g;" % (k, k, v)
+            script += r"s/\$\{%s\}/%s/g;" % (k, v)
+        script += r"s/\@%s\@/%s/g;" % (k, v)
 
     if ctx.attr.cmake:
-        script += "s/\#cmakedefine[\s]+([^\s]+)([\s]+\$\{.+\})?//g"
-    else:
-        script += "s/\@[^\@]*\@/0/g"
+        script += r"s/\#cmakedefine[\s]+(\w+).*/\/* #undef \1 *\//g;"
+        script += r"s/\$\{\w+\}//g;"
+    script += r"s/\@[^\@]*\@/0/g"
 
     ctx.action(
         inputs = [input],
