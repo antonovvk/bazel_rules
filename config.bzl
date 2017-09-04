@@ -39,6 +39,7 @@ def _fix_config_impl(ctx):
 
     script = ""
     for k, v in ctx.attr.values.items():
+        v = v.replace('\\', '\\\\').replace('/', '\\/')
         if ctx.attr.cmake:
             script += r"s/\#cmakedefine\s+%s\b.*/\#define %s %s/g;" % (k, k, v)
             script += r"s/\$\{%s\}/%s/g;" % (k, v)
