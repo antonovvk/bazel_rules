@@ -1,5 +1,5 @@
 def _git_version_impl(ctx):
-    root = str(ctx.file.index.root)[:-8]
+    root = str(ctx.file.repo.root)[:-8]
 
     output = ctx.outputs.out
 
@@ -12,7 +12,7 @@ def _git_version_impl(ctx):
 
     ctx.action(
         outputs = [output],
-        inputs = [ctx.file.index],
+        inputs = [ctx.file.repo],
         progress_message = 'Generating Git version string',
         use_default_shell_env = True,
         command = cmd
@@ -21,7 +21,7 @@ def _git_version_impl(ctx):
 git_version_rule = rule(
     implementation = _git_version_impl,
     attrs = {
-        "index": attr.label(mandatory=True, allow_files=True, single_file=True),
+        "repo": attr.label(mandatory=True, allow_files=True, single_file=True),
         "output": attr.string(mandatory=True),
         "pref": attr.string(mandatory=True),
         "suff": attr.string(mandatory=True),
@@ -30,11 +30,11 @@ git_version_rule = rule(
     output_to_genfiles = True,
 )
 
-def cc_git_version(visibility=None):
+def cc_git_version(repo, visibility=None):
     output = 'cc_git_version.h'
     config = git_version_rule(
         name = 'cc_git_version_impl',
-        index =  '//:git',
+        repo =  repo,
         output = output,
         pref = '#pragma once\nnamespace git_version {\ninline const char* GitVersion() {\nreturn "',
         suff = '";\n}\n} //namespace git_version\n\n',
