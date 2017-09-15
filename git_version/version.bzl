@@ -1,9 +1,9 @@
 def _git_version_impl(ctx):
-    root = str(ctx.file.repo.root)[:-8]
-
     output = ctx.outputs.out
 
-    # --work-tree tools/.. is a hack to execute 'git describe' in actual source tree, not in temp environment
+    # --work-tree {root} is a hack to execute 'git describe' in actual source tree, not in temp environment
+    root = str(ctx.file.repo.root)[:-8]
+
     cmd = """
         echo -n '{pref}' > {file}
         git --work-tree {root} describe --always --dirty | perl -pe 's/(.*)\\n/$1/' >> {file}
