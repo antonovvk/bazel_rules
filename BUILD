@@ -1,7 +1,16 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_prefix")
+load("@io_bazel_rules_go//go:def.bzl", "gazelle", "go_prefix")
+
 go_prefix("")
 
-load("//:version.bzl", "cc_git_version")
-load("//:go_version.bzl", "go_git_version")
-cc_git_version("cc_version", ".git", visibility = ["//visibility:public"])
-go_git_version("go_version", ".git", visibility = ["//visibility:public"])
+gazelle(
+    name = "gazelle",
+    prefix = "",
+)
+
+filegroup(
+    name = "git",
+    srcs = [
+        ".git/index",
+    ],
+    visibility = ["//visibility:public"],
+)
