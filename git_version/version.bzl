@@ -1,18 +1,16 @@
 def _git_version_impl(ctx):
     output = ctx.outputs.out
 
-    # --work-tree {root} is a hack to execute 'git describe' in actual source tree, not in temp environment
-    root = str(ctx.file.repo.root)[:-8]
     date = ctx.var.get('BUILD_TIMESTAMP')
     if not date:
         date = '`date`'
 
     cmd = """
         echo -n '{pref}' > {file}
-        git --work-tree {root} describe --always --dirty | perl -pe 's/(.*)\\n/$1/' >> {file}
+        git --work-tree `readlink WORKSPACE | sed -e 's|/WORKSPACE||'` describe --always --dirty | perl -pe 's/(.*)\\n/$1/' >> {file}
         echo -n " {date}" >> {file}
         echo -n '{suff}' >> {file}
-    """.format(root=root, pref=ctx.attr.pref, suff=ctx.attr.suff, date=date, file=output.path)
+    """.format(pref=ctx.attr.pref, suff=ctx.attr.suff, date=date, file=output.path)
 
     ctx.action(
         outputs = [output],

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"git_version"
+	"examples/git_version"
 )
 
 func main() {

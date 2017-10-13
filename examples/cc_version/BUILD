@@ -4,7 +4,7 @@ cc_binary(
         "main.cpp",
     ],
     deps = [
-        "//git_version:cc_version",
+        "//examples/git_version:cc_version",
     ],
     copts = [
         "-std=c++11",
