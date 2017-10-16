@@ -32,7 +32,7 @@ git_version_rule = rule(
     output_to_genfiles = True,
 )
 
-def cc_git_version(repo, visibility=None):
+def cc_git_version(repo, **kwargs):
     output = 'cc_git_version.h'
     config = git_version_rule(
         name = 'cc_git_version_impl',
@@ -45,5 +45,5 @@ def cc_git_version(repo, visibility=None):
     native.cc_library(
         name = 'cc_version',
         hdrs = [output],
-        visibility = visibility,
+        **kwargs
     )
