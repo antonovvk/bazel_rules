@@ -1,3 +1,35 @@
+def _set_header_impl(ctx):
+    output = ctx.outputs.out
+
+    ctx.file_action(
+        output = output,
+        content = ctx.attr.data
+    )
+
+set_header_rule = rule(
+    implementation = _set_header_impl,
+    attrs = {
+        "data": attr.string(mandatory=True),
+        "file": attr.string(mandatory=True),
+    },
+    outputs = {"out": "%{file}"},
+    output_to_genfiles = True,
+)
+
+def cc_set_header(name, file, data, visibility=None):
+    config = set_header_rule(
+        name = name + "_impl",
+        file = file,
+        data = data,
+    )
+
+    native.cc_library(
+        name = name,
+        hdrs = [file],
+        visibility = visibility,
+    )
+
+
 def _gen_config_impl(ctx):
     output = ctx.outputs.out
 

@@ -1,4 +1,4 @@
-load("//:config.bzl", "cc_gen_config", "cc_fix_config")
+load("//:config.bzl", "cc_gen_config", "cc_fix_config", "cc_set_header")
 
 cc_gen_config(
     name = "gen_cfg",
@@ -7,6 +7,13 @@ cc_gen_config(
         "FLAG": "",
         "VALUE": "\"CONFIGURED\"",
     },
+    visibility = ["//visibility:private"],
+)
+
+cc_set_header(
+    name = "set_header",
+    file = "hello.h",
+    data = "#define HELLO \"Hello World\"",
     visibility = ["//visibility:private"],
 )
 
@@ -59,6 +66,7 @@ cc_binary(
     deps = [
         ":fix_config",
         ":fix_cmake",
+        ":set_header",
     ],
     copts = [
         "-std=c++11",

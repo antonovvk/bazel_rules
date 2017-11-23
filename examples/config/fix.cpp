@@ -3,6 +3,7 @@
 #include "examples/config/foo.h"
 #include "examples/config/bar.h"
 #include "examples/config/jar.h"
+#include "examples/config/hello.h"
 
 int main(int, char*[]) {
 
@@ -11,6 +12,8 @@ int main(int, char*[]) {
 #else
     std::cout << "Not configured" << std::endl;
 #endif
+
+    std::cout << HELLO << std::endl;
 
     return 0;
 }
