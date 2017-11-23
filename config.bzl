@@ -42,11 +42,13 @@ def _fix_config_impl(ctx):
         v = v.replace('\\', '\\\\').replace('/', '\\/')
         if ctx.attr.cmake:
             script += r"s/\#cmakedefine\s+%s\b.*/\#define %s %s/g;" % (k, k, v)
+            script += r"s/\#cmakedefine01\s+%s\b.*/\#define %s 1/g;" % (k, k)
             script += r"s/\$\{%s\}/%s/g;" % (k, v)
         script += r"s/\@%s\@/%s/g;" % (k, v)
 
     if ctx.attr.cmake:
         script += r"s/\#cmakedefine[\s]+(\w+).*/\/* #undef \1 *\//g;"
+        script += r"s/\#cmakedefine01[\s]+(\w+).*/\#define \1 0/g;"
         script += r"s/\$\{\w+\}//g;"
     script += r"s/\@[^\@]*\@/0/g"
 

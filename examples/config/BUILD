@@ -46,6 +46,7 @@ cc_fix_config(
     },
     values = {
         "JAR": "\"jar\"",
+        "JOO": "1",
     },
     visibility = ["//visibility:private"],
 )
