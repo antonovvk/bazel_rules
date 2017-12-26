@@ -14,7 +14,6 @@ def go_git_version(repo, **kwargs):
     go_embed_data(
         name = 'go_git_version_impl',
         src = output,
-        out = 'go_git_version.go',
         package = 'git_version',
         string = True,
         var = "GitVersion",
@@ -22,6 +21,6 @@ def go_git_version(repo, **kwargs):
 
     go_library(
         name = 'go_default_library',
-        srcs = ['go_git_version.go'],
+        srcs = ['go_git_version_impl'],
         **kwargs
     )
