@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"examples/git_version"
+	"github.com/antonovvk/bazel_rules/go_version"
 )
 
 func main() {
-    fmt.Fprintf(os.Stdout, "Version: %s\n", git_version.GitVersion)
+	fmt.Println(go_version.Version())
 }

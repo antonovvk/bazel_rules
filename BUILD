@@ -1,16 +1,6 @@
-load("@io_bazel_rules_go//go:def.bzl", "gazelle", "go_prefix")
-
-go_prefix("")
+load("@io_bazel_rules_go//go:def.bzl", "gazelle")
 
 gazelle(
     name = "gazelle",
-    prefix = "",
-)
-
-filegroup(
-    name = "git",
-    srcs = [
-        ".git/index",
-    ],
-    visibility = ["//visibility:public"],
+    prefix = "github.com/antonovvk/bazel_rules",
 )

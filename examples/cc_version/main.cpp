@@ -1,8 +1,12 @@
 #include <iostream>
 
-#include "examples/git_version/cc_git_version.h"
+#include "examples/cc_version/version.h"
 
 int main(int, char*[]) {
-    std::cout << git_version::GitVersion() << std::endl;
+    std::cout
+        << "Version: " << STABLE_GIT_TAG
+        << " " << STABLE_BUILD_DATE
+        << " " << BUILD_USER << "@" << BUILD_HOST
+        << std::endl;
     return 0;
 }

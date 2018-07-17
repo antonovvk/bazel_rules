@@ -29,7 +29,6 @@ def cc_set_header(name, file, data, visibility=None):
         visibility = visibility,
     )
 
-
 def _gen_config_impl(ctx):
     output = ctx.outputs.out
 

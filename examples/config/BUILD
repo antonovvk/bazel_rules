@@ -12,8 +12,8 @@ cc_gen_config(
 
 cc_set_header(
     name = "set_header",
-    file = "hello.h",
     data = "#define HELLO \"Hello World\"",
+    file = "hello.h",
     visibility = ["//visibility:private"],
 )
 
@@ -22,12 +22,12 @@ cc_binary(
     srcs = [
         "gen.cpp",
     ],
-    deps = [
-        ":gen_cfg",
-    ],
     copts = [
         "-std=c++11",
         "-Wall",
+    ],
+    deps = [
+        ":gen_cfg",
     ],
 )
 
@@ -63,14 +63,13 @@ cc_binary(
     srcs = [
         "fix.cpp",
     ],
-    deps = [
-        ":fix_config",
-        ":fix_cmake",
-        ":set_header",
-    ],
     copts = [
         "-std=c++11",
         "-Wall",
     ],
+    deps = [
+        ":fix_cmake",
+        ":fix_config",
+        ":set_header",
+    ],
 )
-
