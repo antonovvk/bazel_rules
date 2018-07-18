@@ -1,4 +1,2 @@
 build --genrule_strategy=standalone
 build --spawn_strategy=standalone
-
-build --workspace_status_command=./tools/workspace_status.sh
