@@ -83,7 +83,7 @@ def _fix_config_impl(ctx):
         script += r"s/\$\{\w+\}//g;"
     script += r"s/\@[^\@]*\@/0/g"
 
-    ctx.action(
+    ctx.actions.run_shell(
         inputs = [input],
         outputs = [output],
         progress_message = "Configuring %s" % input.short_path,
@@ -95,8 +95,7 @@ fix_config_rule = rule(
     attrs = {
         "file": attr.label(
             mandatory=True,
-            allow_files=True,
-            single_file=True
+            allow_single_file=True,
         ),
         "cmake": attr.bool(default=False, mandatory=False),
         "output": attr.string(mandatory=True),
