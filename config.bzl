@@ -1,7 +1,7 @@
 def _set_header_impl(ctx):
     output = ctx.outputs.out
 
-    ctx.file_action(
+    ctx.actions.write(
         output = output,
         content = ctx.attr.data
     )
@@ -36,7 +36,7 @@ def _gen_config_impl(ctx):
     for k, v in ctx.attr.values.items():
         content += "#define %s %s\n" % (k, v)
 
-    ctx.file_action(
+    ctx.actions.write(
         output = output,
         content = content
     )
